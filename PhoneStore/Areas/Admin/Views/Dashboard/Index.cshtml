@@ -1,0 +1,23 @@
+@model DashboardViewModel
+@{ ViewData["Title"] = "Tổng quan"; }
+<div class="section-heading"><div><span class="eyebrow">PHONESTORE / QUẢN TRỊ</span><h1>Tổng quan cửa hàng</h1><p class="text-muted">Theo dõi hoạt động kinh doanh của bạn.</p></div><a class="btn btn-primary" href="/Admin/Products/Create">＋ Thêm sản phẩm</a></div>
+<div class="metric-grid">
+<div class="panel metric"><span>Sản phẩm</span><strong>@Model.Products</strong></div>
+<div class="panel metric"><span>Khách hàng</span><strong>@Model.Customers</strong></div>
+<div class="panel metric"><span>Đơn hàng</span><strong>@Model.Orders</strong></div>
+<div class="panel metric"><span>Doanh thu hoàn thành</span><strong>@StoreHelper.Money(Model.Revenue)</strong></div>
+<div class="panel metric"><span>Chờ xác nhận</span><strong>@Model.Pending</strong></div>
+<div class="panel metric"><span>Sắp hết hàng (≤ 5)</span><strong>@Model.LowStock</strong></div>
+</div><div class="row g-4 my-1"><div class="col-xl-7"><section class="panel"><h2>Doanh thu theo tháng · @Model.Year</h2><div class="chart-container"><canvas id="revenue-chart"></canvas></div></section></div><div class="col-xl-5"><section class="panel"><h2>Đơn hàng theo tháng · @Model.Year</h2><div class="chart-container"><canvas id="orders-chart"></canvas></div></section></div></div>
+<details class="panel mt-4"><summary>Số liệu biểu đồ theo tháng</summary><div class="table-responsive"><table class="table"><thead><tr><th>Tháng</th><th>Đơn hàng</th><th>Doanh thu hoàn thành</th></tr></thead><tbody>@for(var i=0;i<12;i++){<tr><td>@(i+1)</td><td>@Model.MonthlyOrders[i]</td><td>@StoreHelper.Money(Model.MonthlyRevenue[i])</td></tr>}</tbody></table></div></details>
+<section class="panel mt-4"><div class="section-heading"><h2>Đơn hàng gần đây</h2><a href="/Admin/Orders">Xem tất cả →</a></div>
+@if(Model.Recent.Count == 0){<p class="empty">Chưa có đơn hàng. Các đơn hàng mới sẽ xuất hiện tại đây.</p>}
+@foreach(var order in Model.Recent){<div class="summary-line"><a class="order-code" href="/Admin/Orders/Details/@order.OrderId">@order.OrderCode</a><span>@StoreHelper.Money(order.TotalAmount)</span><span class="status-pill">@StoreHelper.Status(order.Status)</span></div>}</section>
+@section Scripts {
+<script src="~/lib/chartjs/chart.umd.js"></script>
+<script>
+const labels = Array.from({length:12}, (_,i) => 'Tháng ' + (i+1));
+new Chart(document.getElementById('revenue-chart'), { type:'bar', data:{ labels, datasets:[{ label:'Doanh thu (₫)', data:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MonthlyRevenue)), backgroundColor:'#2563eb', borderRadius:5 }] }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}} });
+new Chart(document.getElementById('orders-chart'), { type:'line', data:{ labels, datasets:[{ label:'Đơn hàng', data:@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.MonthlyOrders)), borderColor:'#2563eb', tension:0.3 }] }, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{precision:0}}}} });
+</script>
+}

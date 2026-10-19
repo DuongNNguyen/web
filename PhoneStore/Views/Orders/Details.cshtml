@@ -1,0 +1,7 @@
+@model Order
+@{ ViewData["Title"] = "Chi tiết đơn hàng"; }
+<div class="section-heading"><div><span class="eyebrow">CHI TIẾT ĐƠN HÀNG</span><h1 class="order-code">@Model.OrderCode</h1></div><span class="status-pill status-@Model.Status">@StoreHelper.Status(Model.Status)</span></div>
+
+<partial name="_OrderSummary" model="Model" /><div class="actions mt-4"><a asp-action="Index" class="btn btn-light">← Danh sách đơn hàng</a>
+@if(Model.Status == OrderStatus.Pending){<form asp-action="Cancel" method="post" data-confirm="Bạn muốn hủy đơn hàng này?"><input type="hidden" name="id" value="@Model.OrderId" /><button class="btn btn-outline-danger">Hủy đơn hàng</button></form>}
+</div>

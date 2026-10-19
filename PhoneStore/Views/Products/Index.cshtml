@@ -1,0 +1,17 @@
+@model CatalogViewModel
+@{ ViewData["Title"] = "Sản phẩm"; }
+<div class="page-intro"><span class="eyebrow">KHÁM PHÁ PHONESTORE</span><h1>Công nghệ cho mỗi ngày.</h1><p>Tìm thiết bị phù hợp với cách bạn sống và làm việc.</p></div>
+<div class="row g-4"><aside class="col-lg-3"><form method="get" class="panel filter-panel" asp-action="Index">
+<h2>Bộ lọc sản phẩm</h2>
+<label asp-for="Keyword">Tìm kiếm</label><input asp-for="Keyword" class="form-control mb-3" placeholder="Tên sản phẩm, thương hiệu..." />
+<label asp-for="CategoryId">Danh mục</label><select asp-for="CategoryId" class="form-select mb-3" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))"><option value="">Tất cả danh mục</option></select>
+<label asp-for="BrandId">Thương hiệu</label><select asp-for="BrandId" class="form-select mb-3" asp-items="@(new SelectList(Model.Brands, "BrandId", "BrandName"))"><option value="">Tất cả thương hiệu</option></select>
+<label asp-for="MinPrice">Giá từ (₫)</label><input asp-for="MinPrice" type="number" min="0" class="form-control mb-3" />
+<label asp-for="MaxPrice">Đến (₫)</label><input asp-for="MaxPrice" type="number" min="0" class="form-control mb-3" />
+<label asp-for="Sort">Sắp xếp</label><select asp-for="Sort" class="form-select mb-3"><option value="newest">Mới nhất</option><option value="price_asc">Giá thấp đến cao</option><option value="price_desc">Giá cao đến thấp</option><option value="name_asc">Tên A–Z</option><option value="name_desc">Tên Z–A</option></select>
+<div class="form-check"><input asp-for="InStock" class="form-check-input" /><label asp-for="InStock">Chỉ còn hàng</label></div>
+<div class="form-check mb-3"><input asp-for="Sale" class="form-check-input" /><label asp-for="Sale">Đang khuyến mãi</label></div>
+<button class="btn btn-primary w-100">Áp dụng bộ lọc</button><a asp-action="Index" class="btn btn-link w-100">Xóa bộ lọc</a></form></aside>
+<section class="col-lg-9"><div class="section-heading"><h2>Tất cả sản phẩm</h2><span>@Model.Total sản phẩm</span></div>
+@if(Model.Products.Count == 0){<div class="empty panel"><h3>Không tìm thấy sản phẩm</h3><p>Thử thay đổi từ khóa hoặc bộ lọc của bạn.</p></div>}
+<div class="row g-3">@foreach(var p in Model.Products){<div class="col-6 col-xl-4"><partial name="_ProductCard" model="p" /></div>}</div><partial name="_Pagination" /></section></div>

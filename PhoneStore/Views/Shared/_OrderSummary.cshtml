@@ -1,0 +1,4 @@
+@model Order
+<div class="row g-4"><section class="col-lg-8"><div class="panel table-responsive"><h2>Sản phẩm trong đơn</h2><table class="table"><thead><tr><th>Sản phẩm</th><th>Đơn giá</th><th>Số lượng</th><th>Thành tiền</th></tr></thead><tbody>
+@foreach(var line in Model.Details){<tr><td>@line.ProductNameSnapshot</td><td>@StoreHelper.Money(line.UnitPrice)</td><td>@line.Quantity</td><td>@StoreHelper.Money(line.Subtotal)</td></tr>}</tbody></table><div class="section-heading"><strong>Tổng thanh toán</strong><strong class="price">@StoreHelper.Money(Model.TotalAmount)</strong></div></div></section>
+<aside class="col-lg-4"><div class="panel"><h2>Thông tin nhận hàng</h2><p><strong>@Model.ReceiverName</strong><br />@Model.ReceiverPhone<br />@Model.ReceiverEmail</p><p>@Model.ShippingAddress</p><p class="preserve-lines">@Model.Note</p><hr /><p>Thanh toán khi nhận hàng (COD)</p><p>Ngày đặt: @StoreHelper.Date(Model.OrderDate)</p></div></aside></div>

@@ -1,0 +1,5 @@
+@model List<UserRow>
+@{ ViewData["Title"] = "Người dùng"; }
+<h1>Người dùng</h1><form method="get" class="actions panel mb-4"><input name="keyword" value="@Context.Request.Query["keyword"]" class="form-control" placeholder="Tìm theo tên hoặc email..." aria-label="Tìm người dùng" /><button class="btn btn-primary">Tìm kiếm</button></form>
+<div class="panel table-responsive"><table class="table"><thead><tr><th>Họ tên</th><th>Email / Điện thoại</th><th>Vai trò</th><th>Ngày tạo</th><th>Trạng thái</th><th></th></tr></thead><tbody>
+@foreach(var u in Model){<tr><td>@u.FullName<small class="d-block text-muted">@u.Id[..8]</small></td><td>@u.Email<br />@u.Phone</td><td>@u.Roles</td><td>@StoreHelper.Date(u.CreatedAt)</td><td>@(u.IsActive ? "Hoạt động" : "Đã khóa")</td><td>@if(!u.IsAdmin){<form asp-action="Toggle" method="post" data-confirm="Thay đổi trạng thái tài khoản?"><input type="hidden" name="id" value="@u.Id" /><button class="btn btn-sm btn-outline-secondary">@(u.IsActive ? "Khóa" : "Mở khóa")</button></form>}</td></tr>}</tbody></table>@if(Model.Count == 0){<p class="empty">Không tìm thấy người dùng.</p>}</div><partial name="_Pagination" />

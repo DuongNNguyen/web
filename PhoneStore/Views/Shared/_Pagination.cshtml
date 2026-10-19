@@ -1,0 +1,13 @@
+@{
+    var current = (int?)ViewData["Page"] ?? 1;
+    var pages = (int?)ViewData["Pages"] ?? 1;
+}
+@if(pages > 1){
+<nav class="mt-4" aria-label="Phân trang"><ul class="pagination flex-wrap">
+@for(var i = Math.Max(1, current - 3); i <= Math.Min(pages, current + 3); i++){
+    var query = Context.Request.Query.ToDictionary(x => x.Key, x => x.Value.ToString());
+    query["page"] = i.ToString();
+    var url = Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(Context.Request.Path, query!);
+    <li class="page-item @(i == current ? "active" : "")"><a class="page-link" href="@url" aria-label="Trang @i">@i</a></li>
+}
+</ul></nav>}

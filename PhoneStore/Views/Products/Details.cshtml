@@ -1,0 +1,12 @@
+@model Product
+@{ ViewData["Title"] = Model.ProductName; }
+<nav class="breadcrumbs"><a href="/">Trang chủ</a> / <a href="/Products">Sản phẩm</a> / @Model.ProductName</nav>
+<div class="row g-5"><div class="col-lg-6"><div class="detail-image panel"><img id="main-product-image" src="@Model.MainImageUrl" alt="@Model.ProductName" /></div>
+<div class="image-thumbs"><button type="button" class="thumbnail" data-image="@Model.MainImageUrl"><img src="@Model.MainImageUrl" alt="Ảnh chính" /></button>
+@foreach(var image in Model.Images.OrderBy(i => i.DisplayOrder)){<button type="button" class="thumbnail" data-image="@image.ImageUrl"><img src="@image.ImageUrl" alt="@Model.ProductName" /></button>}</div></div>
+<div class="col-lg-6"><span class="eyebrow">@Model.Brand.BrandName · @Model.Category.CategoryName</span><h1>@Model.ProductName</h1><p class="lead">@Model.Ram RAM · @Model.Storage · @Model.Color</p>
+<div class="price-box"><strong class="price">@StoreHelper.Money(Model.SellingPrice)</strong>@if(Model.SellingPrice < Model.Price){<del>@StoreHelper.Money(Model.Price)</del>}</div>
+<p class="stock">@(Model.StockQuantity > 0 ? $"Còn {Model.StockQuantity} sản phẩm" : "Tạm hết hàng")</p>
+<form asp-area="" asp-controller="Cart" asp-action="Add" method="post" class="actions mb-4"><input type="hidden" name="productId" value="@Model.ProductId" /><label for="quantity">Số lượng</label><input id="quantity" type="number" name="quantity" value="1" min="1" max="@Model.StockQuantity" class="form-control quantity" /><button class="btn btn-primary btn-lg" disabled="@(Model.StockQuantity == 0)">Thêm vào giỏ hàng</button></form>
+<div class="panel"><h2>Thông số sản phẩm</h2><dl class="spec-grid"><dt>RAM</dt><dd>@Model.Ram</dd><dt>Bộ nhớ</dt><dd>@Model.Storage</dd><dt>Màn hình</dt><dd>@Model.Screen</dd><dt>Vi xử lý</dt><dd>@Model.Processor</dd><dt>Pin</dt><dd>@Model.Battery</dd><dt>Camera</dt><dd>@Model.Camera</dd><dt>Màu sắc</dt><dd>@Model.Color</dd></dl></div></div></div>
+<section class="panel mt-4"><h2>Về sản phẩm</h2><p class="preserve-lines">@Model.Description</p></section>

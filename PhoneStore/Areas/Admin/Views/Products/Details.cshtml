@@ -1,0 +1,4 @@
+@model Product
+@{ ViewData["Title"] = Model.ProductName; }
+<div class="section-heading"><h1>@Model.ProductName</h1><a asp-action="Edit" asp-route-id="@Model.ProductId" class="btn btn-primary">Chỉnh sửa</a></div>
+<div class="panel"><img class="table-image" src="@Model.MainImageUrl" alt="@Model.ProductName" /><p>@Model.Brand.BrandName · @Model.Category.CategoryName</p><p class="price">@StoreHelper.Money(Model.SellingPrice)</p><p>Tồn kho: @Model.StockQuantity · @(Model.IsActive ? "Hoạt động" : "Tạm ẩn")</p><dl class="spec-grid"><dt>RAM / Bộ nhớ</dt><dd>@Model.Ram / @Model.Storage</dd><dt>Màn hình</dt><dd>@Model.Screen</dd><dt>Vi xử lý</dt><dd>@Model.Processor</dd><dt>Pin</dt><dd>@Model.Battery</dd><dt>Camera</dt><dd>@Model.Camera</dd><dt>Màu</dt><dd>@Model.Color</dd></dl><p class="preserve-lines">@Model.Description</p><div class="image-thumbs">@foreach(var image in Model.Images){<img class="table-image" src="@image.ImageUrl" alt="@Model.ProductName" />}</div></div>

@@ -1,0 +1,13 @@
+@model CartViewModel
+@{ ViewData["Title"] = "Giỏ hàng"; }
+<div class="section-heading"><h1>Giỏ hàng của bạn</h1><span>@Model.Quantity sản phẩm</span></div>
+@if(Model.Lines.Count == 0){<div class="empty panel"><span class="empty-symbol">＋</span><h2>Giỏ hàng đang trống</h2><p>Khám phá những thiết bị bạn sẽ yêu thích.</p><a href="/Products" class="btn btn-primary">Khám phá sản phẩm</a></div>}
+else {
+<div class="row g-4"><div class="col-lg-8"><div class="panel">
+@foreach(var line in Model.Lines){<div class="cart-line"><img src="@line.Product.MainImageUrl" alt="@line.Product.ProductName" /><div class="flex-grow-1"><a href="/san-pham/@line.Product.Slug"><h3>@line.Product.ProductName</h3></a><p>@StoreHelper.Money(line.Product.SellingPrice)</p>
+@if(!line.Available){<p class="text-danger">Sản phẩm ngừng bán hoặc không đủ tồn kho. Vui lòng cập nhật hoặc xóa.</p>}
+<div class="actions"><form asp-action="Update" method="post" class="actions"><input type="hidden" name="productId" value="@line.Product.ProductId" /><label class="visually-hidden" for="qty-@line.Product.ProductId">Số lượng</label><input id="qty-@line.Product.ProductId" type="number" name="quantity" value="@line.Quantity" min="1" max="@line.Product.StockQuantity" class="form-control quantity" /><button class="btn btn-sm btn-outline-primary">Cập nhật</button></form>
+<form asp-action="Remove" method="post"><input type="hidden" name="productId" value="@line.Product.ProductId" /><button class="btn btn-sm btn-link text-danger">Xóa</button></form></div></div><strong>@StoreHelper.Money(line.Subtotal)</strong></div>}
+</div><div class="actions mt-3"><a href="/Products" class="btn btn-light">← Tiếp tục mua hàng</a><form asp-action="Clear" method="post"><button class="btn btn-outline-secondary">Xóa giỏ hàng</button></form></div></div>
+<aside class="col-lg-4"><div class="panel"><h2>Tóm tắt giỏ hàng</h2><p>@Model.Quantity sản phẩm</p><hr /><div class="section-heading"><span>Tổng cộng</span><strong class="price">@StoreHelper.Money(Model.Total)</strong></div><p class="text-muted">Thanh toán khi nhận hàng (COD).</p><a href="/Checkout" class="btn btn-primary w-100">Tiến hành đặt hàng</a></div></aside></div>
+}

@@ -1,0 +1,25 @@
+@model ProductEditViewModel
+@{ ViewData["Title"] = Model.ProductId == 0 ? "Thêm sản phẩm" : "Chỉnh sửa sản phẩm"; }
+<h1>@ViewData["Title"]</h1>
+<form asp-action="@(Model.ProductId == 0 ? "Create" : "Edit")" method="post" enctype="multipart/form-data" class="panel">
+<input asp-for="ProductId" type="hidden" /><input asp-for="RowVersion" type="hidden" /><div asp-validation-summary="All" class="text-danger"></div><div class="row g-3">
+<div class="col-md-6"><label asp-for="ProductName"></label><input asp-for="ProductName" class="form-control" /><span asp-validation-for="ProductName" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="Price"></label><input asp-for="Price" class="form-control" /><span asp-validation-for="Price" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="DiscountPrice"></label><input asp-for="DiscountPrice" class="form-control" /><span asp-validation-for="DiscountPrice" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="StockQuantity"></label><input asp-for="StockQuantity" class="form-control" /><span asp-validation-for="StockQuantity" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="Ram"></label><input asp-for="Ram" class="form-control" /><span asp-validation-for="Ram" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="Storage"></label><input asp-for="Storage" class="form-control" /><span asp-validation-for="Storage" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="Color"></label><input asp-for="Color" class="form-control" /><span asp-validation-for="Color" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="Screen"></label><input asp-for="Screen" class="form-control" /><span asp-validation-for="Screen" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="Processor"></label><input asp-for="Processor" class="form-control" /><span asp-validation-for="Processor" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="Battery"></label><input asp-for="Battery" class="form-control" /><span asp-validation-for="Battery" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="Camera"></label><input asp-for="Camera" class="form-control" /><span asp-validation-for="Camera" class="text-danger"></span></div>
+<div class="col-md-6"><label asp-for="BrandId"></label><select asp-for="BrandId" asp-items="@(new SelectList(Model.Brands, "BrandId", "BrandName"))" class="form-select"><option value="">Chọn thương hiệu</option></select></div>
+<div class="col-md-6"><label asp-for="CategoryId"></label><select asp-for="CategoryId" asp-items="@(new SelectList(Model.Categories, "CategoryId", "CategoryName"))" class="form-select"><option value="">Chọn danh mục</option></select></div>
+<div class="col-12"><label asp-for="Description"></label><textarea asp-for="Description" class="form-control" rows="5"></textarea></div>
+<div class="col-12"><label asp-for="Uploads"></label><input asp-for="Uploads" type="file" multiple accept=".jpg,.jpeg,.png,.webp" class="form-control" /><span asp-validation-for="Uploads" class="text-danger"></span><p class="form-text mb-0">Không bắt buộc chọn ảnh mới. Các ảnh đã thêm sẽ được giữ nguyên.</p></div>
+<div class="col-12 actions"><div class="form-check"><input asp-for="IsActive" class="form-check-input" /><label asp-for="IsActive"></label></div><div class="form-check"><input asp-for="IsFeatured" class="form-check-input" /><label asp-for="IsFeatured"></label></div></div>
+<div class="col-12"><button class="btn btn-primary">Lưu sản phẩm</button> <a asp-action="Index" class="btn btn-light">Quay lại</a></div></div></form>
+@if(Model.Images.Count > 0){<section class="panel mt-4"><h2>Ảnh hiện tại</h2><div class="image-thumbs">@foreach(var image in Model.Images){<div><img class="table-image" src="@image.ImageUrl" alt="Ảnh sản phẩm" /><p>@(image.IsPrimary ? "Ảnh chính" : "Ảnh bổ sung")</p><form asp-action="RemoveImage" method="post" data-confirm="Xóa ảnh này?"><input type="hidden" name="id" value="@image.ProductImageId" /><button class="btn btn-sm btn-outline-danger">Xóa ảnh</button></form></div>}</div></section>}
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
+

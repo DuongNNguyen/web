@@ -480,3 +480,7 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Generated integration-test fixtures
+scripts/fixtures/
+scripts/failed-response.html

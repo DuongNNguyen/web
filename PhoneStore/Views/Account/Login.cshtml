@@ -1,0 +1,13 @@
+@model LoginViewModel
+@{ ViewData["Title"] = "Chào mừng trở lại"; }
+<div class="account-shell"><div class="panel account-panel"><span class="eyebrow">PHONESTORE · TÀI KHOẢN</span><h1>Chào mừng trở lại</h1>
+<form method="post" asp-action="Login"><div asp-validation-summary="All" class="text-danger"></div>
+<input asp-for="ReturnUrl" type="hidden" />
+<div class="mb-3"><label asp-for="Email"></label><input asp-for="Email" class="form-control" /><span asp-validation-for="Email" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="Password"></label><input asp-for="Password" class="form-control" /><span asp-validation-for="Password" class="text-danger"></span></div>
+<div class="form-check mb-3"><input asp-for="RememberMe" class="form-check-input" /><label asp-for="RememberMe"></label></div>
+
+<button class="btn btn-primary w-100">Đăng nhập</button></form>
+<p class="mt-4 mb-0">Chưa có tài khoản? <a asp-action="Register">Đăng ký ngay</a></p>
+</div></div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>@ViewData["Title"] · Quản trị PhoneStore</title><link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /><link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /></head>
+<body class="admin-body"><div class="admin-shell"><aside class="admin-sidebar"><a href="/Admin" class="brand-logo">PhoneStore<span class="brand-dot">.</span></a><span class="eyebrow d-block mt-2 mb-5">KHÔNG GIAN QUẢN TRỊ</span><nav>
+<a class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "selected" : "")" href="/Admin/Dashboard">Tổng quan</a>
+<a class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Products" ? "selected" : "")" href="/Admin/Products">Sản phẩm</a>
+<a class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Categories" ? "selected" : "")" href="/Admin/Categories">Danh mục</a>
+<a class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Brands" ? "selected" : "")" href="/Admin/Brands">Thương hiệu</a>
+<a class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Orders" ? "selected" : "")" href="/Admin/Orders">Đơn hàng</a>
+<a class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Users" ? "selected" : "")" href="/Admin/Users">Người dùng</a>
+</nav><a href="/" class="back-to-store">← Về cửa hàng</a></aside><div class="admin-main"><header class="admin-topbar"><span>Quản trị / @ViewData["Title"]</span><a href="/Account/Profile">@User.Identity?.Name</a></header><main class="admin-content"><partial name="_Alerts" />@RenderBody()</main></div></div>
+<script src="~/lib/jquery/dist/jquery.min.js"></script><script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script><script src="~/js/site.js" asp-append-version="true"></script>@await RenderSectionAsync("Scripts", required: false)</body></html>

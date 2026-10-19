@@ -1,8 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@model HomeViewModel
+@{ ViewData["Title"] = "Công nghệ cho cuộc sống"; }
+<section class="hero"><div class="hero-copy"><span class="eyebrow">THẾ HỆ MỚI. TRẢI NGHIỆM MỚI.</span><h1>Nâng tầm<br />mỗi khoảnh khắc<span>.</span></h1><p>Thiết kế bạn yêu. Hiệu năng bạn cần.<br />Khám phá chiếc điện thoại dành riêng cho bạn.</p><a href="/Products" class="btn btn-primary btn-lg">Khám phá ngay <span class="ms-3">↗</span></a><div class="hero-caption">PHONESTORE COLLECTION / 2026</div></div><div class="hero-art" aria-hidden="true"><div class="orbit"></div><div class="hero-phone phone-back"><div class="camera-cluster"><i></i><i></i><i></i></div><span>P</span></div><div class="hero-phone phone-front"><div class="phone-island"></div><div class="phone-wallpaper"></div><span>hello.</span></div><div class="hero-label">Thiết kế tinh tế<br /><strong>Hiệu năng vượt trội</strong></div></div></section>
+<section class="benefits"><div><b>01</b><span>Lựa chọn đa dạng<small>Thương hiệu bạn tin tưởng</small></span></div><div><b>02</b><span>Mua sắm dễ dàng<small>Đặt hàng chỉ vài bước</small></span></div><div><b>03</b><span>Thanh toán COD<small>Nhận hàng rồi thanh toán</small></span></div><div><b>04</b><span>Theo dõi đơn hàng<small>Cập nhật từng trạng thái</small></span></div></section>
+<section id="brands" class="section-block"><div class="section-heading"><div><span class="eyebrow">THƯƠNG HIỆU</span><h2>Những cái tên bạn yêu thích</h2></div></div><div class="brand-list">@foreach(var brand in Model.Brands){<a href="/Products?brandId=@brand.BrandId">@brand.BrandName</a>}</div></section>
+<section class="section-block"><div class="section-heading"><div><span class="eyebrow">ĐƯỢC LỰA CHỌN CHO BẠN</span><h2>Sản phẩm nổi bật</h2></div><a href="/Products">Xem tất cả ↗</a></div><div class="row g-3">@foreach(var p in Model.Featured){<div class="col-6 col-lg-3"><partial name="_ProductCard" model="p" /></div>}</div></section>
+@if(Model.Sale.Count > 0){<section class="sale-section section-block"><div class="section-heading"><div><span class="eyebrow">THÊM TRẢI NGHIỆM · BỚT CHI PHÍ</span><h2>Giá tốt, đúng lúc.</h2></div><a href="/Products?sale=true">Tất cả ưu đãi ↗</a></div><div class="row g-3">@foreach(var p in Model.Sale){<div class="col-6 col-lg-3"><partial name="_ProductCard" model="p" /></div>}</div></section>}
+<section class="section-block"><div class="section-heading"><div><span class="eyebrow">CẬP NHẬT BỘ SƯU TẬP</span><h2>Mới tại PhoneStore</h2></div><a href="/Products?sort=newest">Khám phá ↗</a></div><div class="row g-3">@foreach(var p in Model.Newest){<div class="col-6 col-lg-3"><partial name="_ProductCard" model="p" /></div>}</div></section>

@@ -1,0 +1,10 @@
+@model Product
+<article class="product-card">
+<a href="/san-pham/@Model.Slug" class="product-image"><img src="@Model.MainImageUrl" alt="@Model.ProductName" loading="lazy" />
+@if(Model.SellingPrice < Model.Price){<span class="sale-badge">−@Math.Round((1 - Model.SellingPrice / Model.Price) * 100)%</span>}</a>
+<div class="product-body"><small>@Model.Brand.BrandName</small><h3><a href="/san-pham/@Model.Slug">@Model.ProductName</a></h3>
+<p class="spec-line">@Model.Ram · @Model.Storage</p><strong class="price">@StoreHelper.Money(Model.SellingPrice)</strong>
+@if(Model.SellingPrice < Model.Price){<del>@StoreHelper.Money(Model.Price)</del>}
+<p class="stock @(Model.StockQuantity == 0 ? "text-danger" : "")">@(Model.StockQuantity > 0 ? "Có sẵn · Giao hàng tận nơi" : "Tạm hết hàng")</p>
+<form asp-area="" asp-controller="Cart" asp-action="Add" method="post"><input type="hidden" name="productId" value="@Model.ProductId" /><button class="btn btn-outline-primary w-100" disabled="@(Model.StockQuantity == 0)">Thêm vào giỏ</button></form>
+</div></article>

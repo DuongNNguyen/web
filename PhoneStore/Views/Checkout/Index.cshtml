@@ -1,0 +1,15 @@
+@model CheckoutViewModel
+@{ ViewData["Title"] = "Đặt hàng"; }
+<h1>Hoàn tất đơn hàng</h1><p class="text-muted mb-4">Thông tin chính xác giúp đơn hàng đến với bạn nhanh hơn.</p>
+<form method="post" asp-action="Index"><input asp-for="Token" type="hidden" /><div asp-validation-summary="All" class="text-danger"></div><div class="row g-4"><section class="col-lg-7"><div class="panel"><h2>Thông tin nhận hàng</h2>
+<div class="mb-3"><label asp-for="ReceiverName"></label><input asp-for="ReceiverName" class="form-control" /><span asp-validation-for="ReceiverName" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="ReceiverPhone"></label><input asp-for="ReceiverPhone" class="form-control" /><span asp-validation-for="ReceiverPhone" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="ReceiverEmail"></label><input asp-for="ReceiverEmail" class="form-control" /><span asp-validation-for="ReceiverEmail" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="ShippingAddress"></label><input asp-for="ShippingAddress" class="form-control" /><span asp-validation-for="ShippingAddress" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="Note"></label><input asp-for="Note" class="form-control" /><span asp-validation-for="Note" class="text-danger"></span></div>
+</div></section><aside class="col-lg-5"><div class="panel"><h2>Đơn hàng của bạn</h2>
+@foreach(var line in Model.Cart.Lines){<div class="summary-line"><span>@line.Product.ProductName × @line.Quantity<small class="d-block text-muted">@StoreHelper.Money(line.Product.SellingPrice) / sản phẩm</small></span><strong>@StoreHelper.Money(line.Subtotal)</strong></div>}
+<div class="summary-line"><strong>Tổng thanh toán</strong><strong class="price">@StoreHelper.Money(Model.Cart.Total)</strong></div>
+<p class="mt-3">◉ Thanh toán khi nhận hàng (COD)</p><p class="text-muted small">Giá và tồn kho được kiểm tra lại khi đặt hàng. Không thu tiền trực tuyến.</p>
+<button class="btn btn-primary btn-lg w-100" disabled="@(Model.Cart.Lines.Count == 0)">Xác nhận đặt hàng</button></div></aside></div></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

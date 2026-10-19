@@ -1,50 +1,14 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PhoneStore</title>
-    <script type="importmap"></script>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PhoneStore.styles.css" asp-append-version="true" />
-</head>
+@inject CartService Cart
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><title>@ViewData["Title"] · PhoneStore</title><link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /><link rel="stylesheet" href="~/css/site.css" asp-append-version="true" /></head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PhoneStore</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+<div class="announcement">Một lựa chọn thông minh. Một trải nghiệm mới. <span>Thanh toán khi nhận hàng</span></div>
+<header class="store-header"><div class="container"><div class="header-main"><a class="brand-logo" href="/"><span class="logo-mark">P</span>PhoneStore<span class="brand-dot">.</span></a><form action="/Products" method="get" class="header-search"><label class="visually-hidden" for="header-keyword">Tìm sản phẩm</label><input id="header-keyword" name="keyword" placeholder="Bạn đang tìm thiết bị nào?" /><button aria-label="Tìm kiếm">⌕</button></form><div class="header-actions">
+@if(User.Identity?.IsAuthenticated == true){<a href="/Account/Profile">Tài khoản</a><form action="/Account/Logout" method="post">@Html.AntiForgeryToken()<button class="text-button">Đăng xuất</button></form>}else{<a href="/Account/Login">Đăng nhập</a><a href="/Account/Register">Đăng ký</a>}
+<a class="cart-link" href="/Cart">Giỏ hàng <b>@Cart.Read().Values.Sum()</b></a></div></div>
+<nav class="navbar navbar-expand-md p-0"><button class="navbar-toggler my-2" type="button" data-bs-toggle="collapse" data-bs-target="#store-nav" aria-controls="store-nav" aria-expanded="false" aria-label="Mở danh mục"><span class="navbar-toggler-icon"></span></button><div id="store-nav" class="collapse navbar-collapse"><div class="nav-links"><a href="/">Trang chủ</a><a href="/Products">Sản phẩm</a><a href="/Products?categoryId=1">Điện thoại</a><a href="/#brands">Thương hiệu</a><a href="/Products?sale=true">Khuyến mãi</a><a href="/Orders">Đơn hàng</a>@if(User.IsInRole("Admin")){<a href="/Admin">Quản trị ↗</a>}</div><span class="nav-note ms-auto">Công nghệ trong tầm tay</span></div></nav></div></header>
+<main class="container main-content"><partial name="_Alerts" />@RenderBody()</main>
+<footer class="store-footer"><div class="container"><div class="row g-4"><div class="col-md-5"><a class="brand-logo" href="/">PhoneStore<span class="brand-dot">.</span></a><p class="mt-3">Kết nối cuộc sống. Khơi mở trải nghiệm.<br />Cửa hàng công nghệ dành cho bạn.</p></div><div class="col-6 col-md-3"><h3>Khám phá</h3><a href="/Products">Tất cả sản phẩm</a><a href="/Products?sale=true">Ưu đãi hôm nay</a></div><div class="col-6 col-md-4"><h3>Đồng hành cùng bạn</h3><a href="/Orders">Đơn hàng của tôi</a><a href="/Account/Profile">Tài khoản</a><a href="/Home/Privacy">Thông tin & quyền riêng tư</a></div></div><div class="footer-bottom">© @DateTime.UtcNow.Year PhoneStore. Đồ án phần mềm web.</div></div></footer>
+<script src="~/lib/jquery/dist/jquery.min.js"></script><script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script><script src="~/js/site.js" asp-append-version="true"></script>@await RenderSectionAsync("Scripts", required: false)
+</body></html>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - PhoneStore - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>

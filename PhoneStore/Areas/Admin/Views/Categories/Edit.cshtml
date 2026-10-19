@@ -1,0 +1,10 @@
+@model LookupViewModel
+@{ ViewData["Title"] = Model.Id == 0 ? "Thêm mới" : "Chỉnh sửa"; }
+<h1>@ViewData["Title"]</h1>
+<form method="post" class="panel form-panel" asp-action="@(Model.Id == 0 ? "Create" : "Edit")">
+<input asp-for="Id" type="hidden" /><div asp-validation-summary="All" class="text-danger"></div>
+<div class="mb-3"><label asp-for="Name"></label><input asp-for="Name" class="form-control" /><span asp-validation-for="Name" class="text-danger"></span></div>
+<div class="mb-3"><label asp-for="Description"></label><textarea asp-for="Description" class="form-control"></textarea></div>
+<div class="form-check mb-3"><input asp-for="IsActive" class="form-check-input" /><label asp-for="IsActive"></label></div>
+<button class="btn btn-primary">Lưu thay đổi</button> <a asp-action="Index" class="btn btn-light">Quay lại</a></form>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
